@@ -1,0 +1,132 @@
+CREATE TABLE emp(
+    emp_id  INT PRIMARY KEY,
+    first_name VARCHAR(10),
+    second_name VARCHAR(10),
+    DOB DATE,
+    sex VARCHAR(1),
+    salary INT,
+    super_id INT, 
+    branch_id INT  
+);
+
+--SUPER_ID AND BRANCH_ID ARE THE FOREIGN KEYS WHICH POINTS TO EMPLOYEE AND BRANCH RESPECTIVELY 
+
+CREATE TABLE BRANCH(
+    branch_id INT PRIMARY KEY,
+    branch_name VARCHAR(10),
+    mngr_id INT,
+    mngr_start_date DATE,
+    FOREIGN KEY(mngr_id) REFERENCES emp(emp_id) ON DELETE SET NULL
+);
+
+ALTER TABLE emp
+ADD FOREIGN KEY(branch_id)
+REFERENCES BRANCH(branch_id)
+ON DELETE SET NULL;
+
+ALTER TABLE emp
+ADD FOREIGN KEY emp(super_id)
+REFERENCES emp(emp_id)
+ON DELETE SET NULL;
+
+CREATE TABLE Client_Table(
+    client_id INT PRIMARY KEY,
+    client_name VARCHAR(20),
+    branch_id INT,
+    FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id) ON DELETE SET NULL 
+);
+
+DROP TABLE works_with;
+
+CREATE TABLE works_with(
+    emp_id INT ,
+    client_id INT,
+    total_sales INT,
+    FOREIGN KEY (emp_id) REFERENCES emp(emp_id) ON DELETE CASCADE,
+    FOREIGN KEY (client_id) REFERENCES Client_Table(client_id) ON DELETE CASCADE
+);
+
+ CREATE TABLE BRANCH_SUPPLIER(
+     branch_id INT,
+     supplier_name VARCHAR(20),
+     supplier_type VARCHAR(15),
+     FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id) ON DELETE CASCADE
+ );
+
+--What is done till now :-
+--1-TABLES = emp , BRANCH , Client_Table , works_with , BRANCH_SUPPLIER
+
+--Beginning inserting values in BRANCH 
+
+INSERT INTO emp VALUES(100,'David','Wallace','1939-11-17','M',250000,NULL,NULL);
+INSERT INTO BRANCH VALUES(1,'Corporate',100,'2006-02-09');
+
+UPDATE emp
+SET branch_id = 1
+WHERE emp_id = 100;
+
+INSERT INTO emp VALUES(101,'Jan','Levinson','1961-05-11','F',110000,100,1);
+
+--Till now we have inserted our employees in emp and BRANCH of branch_id =1
+
+--Beginning Inserting in emp and BRANCH with branhc_id = 2
+
+INSERT INTO emp VALUES(102,'Michael','Scott','1964-03-15','M',75000,100,NULL);
+INSERT INTO BRANCH VALUES(2,'Scranton',102,'1992-04-06');
+
+UPDATE emp
+SET branch_id = 2
+WHERE emp_id = 102;
+
+INSERT INTO emp VALUES(103,'Angela','Martin','1971-06-05','F',63000,102,2);
+INSERT INTO emp VALUES(104,'Kelly','Kapoor','1980-02-25','F',55000,102,2);
+INSERT INTO emp VALUES(105,'Stanley','Hudson','1958-02-19','M',69000,102,2);
+
+--Beginning Inserting into emp and BANCH with branch_id =3
+INSERT INTO emp VALUES(106,'Josh','Porter','1969-09-05','M',78000,100,NULL);
+INSERT INTO BRANCH VALUES(3,'Stanford',106,'1998-02-13');  
+
+UPDATE emp
+SET branch_id = 3
+WHERE emp_id = 106;
+
+INSERT INTO emp VALUES(107,'Andy','Bernanrd','1973-07-22','M',65000,106,3);
+INSERT INTO emp VALUES(108,'Jim','Halpert','1978-10-01','M',71000,106,3);
+
+SELECT * FROM emp;
+SELECT * FROM BRANCH;
+
+--bEGINNING iNSERTING INTO BRANCH_SUPPLIER TABLE
+INSERT INTO BRANCH_SUPPLIER VALUES(2,'Hammer Mill','Paper');
+INSERT INTO BRANCH_SUPPLIER VALUES(2,'Uni-Ball','Writing Utens');
+INSERT INTO BRANCH_SUPPLIER VALUES(3,'Patriot Paper','Paper');
+INSERT INTO BRANCH_SUPPLIER VALUES(2,'J.T Forms and Labels','Custom Forms');
+INSERT INTO BRANCH_SUPPLIER VALUES(3,'Uni-Ball','Writing Utens');
+INSERT INTO BRANCH_SUPPLIER VALUES(3,'Hammer Mill','Paper');
+INSERT INTO BRANCH_SUPPLIER VALUES(3,'Stanford Labels','Custom Forms');
+
+SELECT * FROM BRANCH_SUPPLIER;
+
+--Beginning Inserting into Client_Table
+INSERT INTO Client_Table VALUES(400,'Dunmore HS',2);
+INSERT INTO Client_Table VALUES(401,'L&C',2);
+INSERT INTO Client_Table VALUES(402,'FedEx',3);
+INSERT INTO Client_Table VALUES(403,'JDL LLC',3);
+INSERT INTO Client_Table VALUES(404,'Scranton PGs',2);
+INSERT INTO Client_Table VALUES(405,'Times NP',3);
+INSERT INTO Client_Table VALUES(406,'FedEx',2);
+
+SELECT * FROM Client_Table;
+
+--Beginning Inserting into works_with table
+INSERT INTO works_with VALUES(105,400,55000);
+INSERT INTO works_with VALUES(102,401,267000);
+INSERT INTO works_with VALUES(108,402,22500);
+INSERT INTO works_with VALUES(107,403,5000);
+INSERT INTO works_with VALUES(108,403,12000);
+INSERT INTO works_with VALUES(105,404,33000);
+INSERT INTO works_with VALUES(107,405,26000);
+INSERT INTO works_with VALUES(102,406,15000);
+INSERT INTO works_with VALUES(105,406,130000);
+
+SELECT * FROM works_with;
