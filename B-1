@@ -1,0 +1,58 @@
+CREATE TABLE class(
+student_id INT PRIMARY KEY,
+name VARCHAR(15),
+height DECIMAL(3,2)
+);
+
+DESCRIBE class;
+
+DROP TABLE class;
+
+ALTER TABLE class ADD gpa DECIMAL(4,2);
+
+ALTER TABLE class DROP COLUMN gpa;
+
+INSERT INTO class(name,major) VALUES('KARTIK',8547);
+INSERT INTO class(name,major) VALUES('RELIANCE INDSUTRIES',1900);
+INSERT INTO class(name,major) VALUES('TATA STEEL',1900);
+
+
+
+SELECT * FROM class;
+
+
+CREATE TABLE class(
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(20) NOT NULL,
+    major VARCHAR(20) DEFAULT('FAIL')
+);
+
+--UPDATING
+UPDATE class 
+SET major = '1200'
+WHERE major = '8547';
+
+UPDATE class 
+SET major = '1200'
+WHERE student_id = 1;
+
+UPDATE class
+SET major = '650'
+WHERE student_id = 3;
+
+UPDATE class
+SET major = 'Growing Right now'
+WHERE student_id = 1 OR student_id = 3;
+
+UPDATE class
+SET name = 'Samriddhi',major = 'BIO'
+WHERE student_id = 1;
+
+--Deleting
+DELETE FROM class
+WHERE student_id = 2;
+
+DELETE FROM class 
+WHERE name = 'TATA STEEL' AND major = 'Growing Right now';
+
+DELETE FROM class;
