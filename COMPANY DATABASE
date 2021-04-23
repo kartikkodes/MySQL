@@ -1,3 +1,4 @@
+--I HAVE FORGOT TO ADD 107 EMP_ID AND OTHER DETAILS SO DONT BOTHER IF YOU FCAE ANY DIFFICLUTY RELATING TO 107
 CREATE TABLE emp(
     emp_id  INT PRIMARY KEY,
     first_name VARCHAR(10),
@@ -130,3 +131,78 @@ INSERT INTO works_with VALUES(102,406,15000);
 INSERT INTO works_with VALUES(105,406,130000);
 
 SELECT * FROM works_with;
+
+-- More basics------------------------------------------------
+
+SELECT * FROM emp;
+SELECT * FROM Client_Table;
+
+SELECT * FROM emp
+ORDER BY salary;
+
+SELECT * FROM emp
+ORDER  BY salary DESC;
+
+SELECT * FROM emp
+ORDER BY sex,first_name,second_name;
+--This was to order them by sex then first_name and then by second_name
+
+SELECT * FROM emp
+LIMIT 5; 
+--This will show only first five employees of the emp table
+
+SELECT  first_name,second_name FROM emp;
+
+
+SELECT DISTINCT sex FROM emp;
+
+SELECT DISTINCT branch_id FROM emp;
+
+
+--FUNCTIONS--------------------------------------
+
+SELECT COUNT(emp_id) FROM emp;
+
+SELECT COUNT(super_id) FROM emp;
+--THIS WILL DISPAY 7 BECAUSE 100 HAS NO SUPER ID/ SUPER ID IS NULL
+
+SELECT COUNT(emp_id) FROM emp
+WHERE sex ='F' AND DOB > '1970-01-01';
+
+SELECT AVG(salary) FROM emp
+WHERE sex = 'M';
+---AVG IS TO FIND OUT AVERAGE
+
+SELECT SUM(salary) FROM emp
+WHERE sex = 'M';
+
+
+--********--
+SELECT COUNT(sex) , sex
+FROM emp
+GROUP BY sex;
+
+SELECT SUM(total_sales) , emp_id 
+FROM works_with
+GROUP BY emp_id;
+
+SELECT SUM(total_sales) , client_id
+FROM works_with
+GROUP BY client_id;
+
+--*****----
+--WILDCARDS--
+--*****----
+-- % ANY NUMBER OF CHAR   AND   _ MEANS ONE CHAR
+
+SELECT * FROM Client_Table
+WHERE client_name LIKE '%LLC';
+
+SELECT * FROM BRANCH_SUPPLIER
+WHERE supplier_name LIKE '%LABELS';
+
+SELECT * FROM emp
+WHERE DOB LIKE '____-10%';
+
+SELECT * FROM Client_Table
+WHERE client_name LIKE '%S';
