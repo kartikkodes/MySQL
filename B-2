@@ -1,0 +1,22 @@
+SELECT class.name , class.major
+FROM class
+ORDER BY name;
+
+SELECT name
+FROM class
+ORDER BY major , student_id;
+
+SELECT name
+FROM class
+ORDER BY student_id ASC
+LIMIT 2;
+
+SELECT *
+FROM class
+WHERE major = 1900;
+
+--<,>,<=,>=,<>,AND,OR
+
+SELECT *
+FROM class 
+WHERE major <> 1900;
