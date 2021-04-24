@@ -206,3 +206,65 @@ WHERE DOB LIKE '____-10%';
 
 SELECT * FROM Client_Table
 WHERE client_name LIKE '%S';
+
+---*****----
+---UNIONS----
+--SAME NO. OF COLUMNS
+--SIMILAR DATA TYPES
+SELECT first_name AS COMPLETE_LIST
+FROM emp
+UNION
+SELECT branch_name 
+FROM BRANCH
+UNION
+SELECT client_name 
+FROM Client_Table;
+
+SELECT client_name AS NAAM , branch_id FROM Client_Table
+UNION
+SELECT supplier_name , branch_id FROM BRANCH_SUPPLIER;
+
+--******--
+--JOINS--
+--*****--
+SELECT emp.emp_id , emp.first_name ,BRANCH.branch_name
+FROM emp
+JOIN BRANCH
+ON emp_id = mngr_id;
+
+--LEFT JOIN
+INSERT INTO BRANCH VALUES(4,'BJP',NULL,NULL);
+
+SELECT emp.emp_id , emp.first_name ,BRANCH.branch_name FROM emp LEFT JOIN BRANCH ON emp_id = mngr_id;
+
+--RIGHT JOIN
+SELECT emp.emp_id , emp.first_name , BRANCH.branch_name FROM emp RIGHT JOIN BRANCH ON emp_id = mngr_id;
+
+--*******--
+--NESTED QUERIES--
+SELECT emp_id FROM works_with WHERE total_sales > 30000;
+
+SELECT first_name , second_name FROM emp WHERE emp_id IN (
+    SELECT emp_id FROM works_with WHERE total_sales > 30000
+);
+--READ THESE QUERIES FROM DOWNWARDS TO UPWARD (LAST EXAMPLE)
+
+SELECT client_name FROM Client_Table WHERE branch_id IN (
+    SELECT branch_id FROM BRANCH WHERE mngr_id = 102 LIMIT 1 
+);
+
+--****************************--
+-------ON DELETE------------------
+--ON DELETE SET NULL / SET THAT PARTICULAR VALUE TO NULL
+SELECT * FROM BRANCH;
+
+DELETE FROM emp WHERE emp_id = 102;
+
+SELECT * FROM BRANCH; 
+
+SELECT * FROM emp;
+
+--ON DELETE CASCADE / DELETES THE ENTIRE ROW
+SELECT * FROM BRANCH_SUPPLIER;
+
+DELETE FROM BRANCH_SUPPLIER WHERE branch_id = 2;
