@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS COUNTRY(
+    country_id INT PRIMARY KEY,
+    country_name VARCHAR(20),
+    region_id INT
+);
