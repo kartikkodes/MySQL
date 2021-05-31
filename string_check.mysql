@@ -1,0 +1,8 @@
+create table country(
+    country_id int,
+    country_name varchar(10),
+    check(country_name in('Italy','India','China'))
+);
+drop table country;
+
+insert into country VALUES(1,'Romania');
