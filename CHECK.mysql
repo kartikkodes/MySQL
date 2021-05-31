@@ -1,0 +1,9 @@
+create table jobs(
+    job_id int primary key,
+    job_title varchar(10),
+    min_sal int,
+    max_sal int,
+    check (max_sal <= 25000)
+);
+
+INSERT INTO jobs VALUES(1,"SALES",10000,56000);
